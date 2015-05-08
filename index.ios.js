@@ -9,6 +9,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   TabBarIOS,
   View,
 } = React;
@@ -20,9 +21,10 @@ var MyPlantAndMe = React.createClass({
     };
   },
 
-  renderTab: function(title, content) {
+  renderTab: function(title, content, icon) {
     return React.createElement(TabBarIOS.Item, {
       title: title,
+      icon: icon,
       style: styles.container,
       selected: this.state.selectedTab == title,
       onPress: () => {this.setState({selectedTab: title})},
@@ -44,9 +46,13 @@ var MyPlantAndMe = React.createClass({
   render: function() {
     return (
         <TabBarIOS>
-        {this.renderTab('Lights', this.renderContentLights())}
-        {this.renderTab('Water', this.renderContentWater())}
-        {this.renderTab('Temperature', this.renderContentTemperature())}
+        {this.renderTab('Lights',
+                        this.renderContentLights(),
+                        require('image!sunny'))}
+        {this.renderTab('Water', this.renderContentWater(),
+                        require('image!water-drop'))}
+        {this.renderTab('Temperature', this.renderContentTemperature(),
+                        require('image!thermometer'))}
         </TabBarIOS>
     );
   }
@@ -58,6 +64,11 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+
+  tabIcon: {
+    width: 30,
+    height: 30
   }
 });
 
