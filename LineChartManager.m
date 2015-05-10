@@ -16,6 +16,7 @@ RCT_EXPORT_MODULE();
   return lineChart;
 }
 
+RCT_EXPORT_VIEW_PROPERTY(yLabels, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(xLabels, NSArray)
 RCT_CUSTOM_VIEW_PROPERTY(chartData, PNLineChartData, PNLineChart)
 {
