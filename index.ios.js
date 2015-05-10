@@ -57,29 +57,45 @@ var MyPlantAndMe = React.createClass({
     }, content);
   },
 
+  renderBarChart: function() {
+    var xLabels = this.state.graphData.map((n) => 'step' + n),
+        chart = [{
+          data: this.state.graphData.map((d) => d.value),
+          color: colors.barChartColor
+        }];
+
+    return React.createElement(BarChart, {
+      style: styles.barChart,
+      xLabels: xLabels,
+      chartData: chart
+    });
+  },
+
   renderContentLights: function() {
-    var chart = [
-      {
-        data: this.state.graphData.map((d) => d.value),
-        color: {r: 77, g: 196, b: 122, a: 1}
-      },
-    ];
-
-    var labels = {
-      x: chart[0].data.map((n) => 'step' + n)
-    };
-
-    return (<BarChart style={styles.barChart}
-                      xLabels={labels.x}
-                      chartData={chart} />);
+    return (
+      <View>
+        <Text>Luminosity over time</Text>
+        {this.renderBarChart()}
+      </View>
+    );
   },
 
   renderContentWater: function() {
-    return (<Text>Water data</Text>);
+    return (
+      <View>
+        <Text>Humidity over time</Text>
+        {this.renderBarChart()}
+      </View>
+    );
   },
 
   renderContentTemperature: function() {
-    return (<Text>Temperature data</Text>);
+    return (
+      <View>
+        <Text>Temperature over time</Text>
+        {this.renderBarChart()}
+      </View>
+    );
   },
 
   componentDidMount: function() {
@@ -121,5 +137,14 @@ var styles = StyleSheet.create({
     width: 300
   }
 });
+
+var colors = {
+  barChartColor: {
+    r: 77,
+    g: 196,
+    b: 122,
+    a: 1
+  }
+};
 
 AppRegistry.registerComponent('MyPlantAndMe', () => MyPlantAndMe);
