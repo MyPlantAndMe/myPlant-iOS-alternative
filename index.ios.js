@@ -5,7 +5,8 @@
 'use strict';
 
 var React = require('react-native'),
-    config = require('./config');
+    config = require('./config'),
+    LineChart = require('./components/LineChart');
 
 var {
   AppRegistry,
@@ -14,10 +15,7 @@ var {
   Image,
   TabBarIOS,
   View,
-  requireNativeComponent,
 } = React;
-
-var BarChart = requireNativeComponent('BarChart', null);
 
 var MyPlantAndMe = React.createClass({
   getInitialState: function() {
@@ -57,16 +55,20 @@ var MyPlantAndMe = React.createClass({
     }, content);
   },
 
-  renderBarChart: function() {
-    var xLabels = this.state.graphData.map((n) => 'step' + n),
-        chart = [{
-          data: this.state.graphData.map((d) => d.value),
-          color: colors.barChartColor
-        }];
+  renderLineChart: function() {
+    var chart = [{
+      data: this.state.graphData
+        .sort((obj1, obj2) => {
+          var d1 = new Date(obj1.date),
+              d2 = new Date(obj2.date);
+          return d1.getTime() < d2.getTime();
+        })
+        .map((obj) => obj.value),
+      color: colors.lineChartColor
+    }];
 
-    return React.createElement(BarChart, {
-      style: styles.barChart,
-      xLabels: xLabels,
+    return React.createElement(LineChart, {
+      style: styles.lineChart,
       chartData: chart
     });
   },
@@ -75,7 +77,7 @@ var MyPlantAndMe = React.createClass({
     return (
       <View>
         <Text>Luminosity over time</Text>
-        {this.renderBarChart()}
+        {this.renderLineChart()}
       </View>
     );
   },
@@ -84,7 +86,7 @@ var MyPlantAndMe = React.createClass({
     return (
       <View>
         <Text>Humidity over time</Text>
-        {this.renderBarChart()}
+        {this.renderLineChart()}
       </View>
     );
   },
@@ -93,7 +95,7 @@ var MyPlantAndMe = React.createClass({
     return (
       <View>
         <Text>Temperature over time</Text>
-        {this.renderBarChart()}
+        {this.renderLineChart()}
       </View>
     );
   },
@@ -132,14 +134,14 @@ var styles = StyleSheet.create({
     height: 30
   },
 
-  barChart: {
-    height: 150,
+  lineChart: {
+    height: 200,
     width: 300
   }
 });
 
 var colors = {
-  barChartColor: {
+  lineChartColor: {
     r: 77,
     g: 196,
     b: 122,

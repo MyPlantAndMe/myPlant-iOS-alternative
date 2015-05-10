@@ -22,7 +22,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		2254EC971AFD969100EADD91 /* BarChartManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254EC961AFD969100EADD91 /* BarChartManager.m */; };
+		2254EC971AFD969100EADD91 /* LineChartManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254EC961AFD969100EADD91 /* LineChartManager.m */; };
 		22E5184B1AFE091400CD61E4 /* PNBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E5182E1AFE091400CD61E4 /* PNBar.m */; };
 		22E5184C1AFE091400CD61E4 /* PNBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E518301AFE091400CD61E4 /* PNBarChart.m */; };
 		22E5184D1AFE091400CD61E4 /* PNChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E518341AFE091400CD61E4 /* PNChartLabel.m */; };
@@ -142,7 +142,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		2254EC961AFD969100EADD91 /* BarChartManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarChartManager.m; sourceTree = "<group>"; };
+		2254EC961AFD969100EADD91 /* LineChartManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineChartManager.m; sourceTree = "<group>"; };
 		22E5182D1AFE091400CD61E4 /* PNBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNBar.h; sourceTree = "<group>"; };
 		22E5182E1AFE091400CD61E4 /* PNBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNBar.m; sourceTree = "<group>"; };
 		22E5182F1AFE091400CD61E4 /* PNBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNBarChart.h; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				2254EC961AFD969100EADD91 /* BarChartManager.m */,
+				2254EC961AFD969100EADD91 /* LineChartManager.m */,
 				22E5185C1AFE18FA00CD61E4 /* RCTConvert+PNChart.h */,
 				22E5185D1AFE18FA00CD61E4 /* RCTConvert+PNChart.m */,
 			);
@@ -622,7 +622,7 @@
 				22E5185E1AFE18FA00CD61E4 /* RCTConvert+PNChart.m in Sources */,
 				22E5184D1AFE091400CD61E4 /* PNChartLabel.m in Sources */,
 				22E518581AFE091400CD61E4 /* PNScatterChartDataItem.m in Sources */,
-				2254EC971AFD969100EADD91 /* BarChartManager.m in Sources */,
+				2254EC971AFD969100EADD91 /* LineChartManager.m in Sources */,
 				22E518551AFE091400CD61E4 /* PNPieChartDataItem.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				22E5185B1AFE0B4500CD61E4 /* UICountingLabel.m in Sources */,

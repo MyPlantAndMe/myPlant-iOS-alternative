@@ -3,10 +3,10 @@
 
 #import "PNChart.h"
 
-@interface BarChartManager : RCTViewManager
+@interface LineChartManager : RCTViewManager
 @end
 
-@implementation BarChartManager
+@implementation LineChartManager
 
 RCT_EXPORT_MODULE();
 
