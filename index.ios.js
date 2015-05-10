@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var React = require('react-native');
+var React = require('react-native'),
+    config = require('./config');
 
 var {
   AppRegistry,
@@ -16,67 +17,52 @@ var {
   requireNativeComponent,
 } = React;
 
-var MOCKED_DATA = {
-  init: {
-    temp: [{date: 'Sat Apr 18 2015 15:29:28 GMT+0200 (CEST)', value: 13.0},
-           {date: 'Sat Apr 18 2015 15:29:41 GMT+0200 (CEST)', value: 14.0}],
-    humidity: [{date: 'Sat Apr 18 2015 15:30:57 GMT+0200 (CEST)', value: 33},
-               {date: 'Sat Apr 18 2015 15:43:02 GMT+0200 (CEST)', value: 35},
-               {date: 'Sat Apr 18 2015 15:30:57 GMT+0200 (CEST)', value: 42}],
-    luminosity: [{date: 'Sat Apr 18 2015 15:38:24 GMT+0200 (CEST)', value: 56},
-                 {date: 'Sat Apr 18 2015 15:38:24 GMT+0200 (CEST)', value: 56}]
-  },
-
-  // GET /temp
-  temp: {
-    history: [
-      {date: 'Sat Apr 18 2015 15:29:28 GMT+0200 (CEST)', value: 13.0},
-      {date: 'Sat Apr 18 2015 15:29:41 GMT+0200 (CEST)', value: 14.0}
-    ]
-  },
-
-  // GET /luminosity
-  luminosity: {
-    history: [
-      {date: 'Sat Apr 18 2015 15:30:57 GMT+0200 (CEST)', value: 33},
-      {date: 'Sat Apr 18 2015 15:43:02 GMT+0200 (CEST)', value: 35},
-      {date: 'Sat Apr 18 2015 15:30:57 GMT+0200 (CEST)', value: 42}
-    ]
-  },
-
-  // GET /humidity
-  humidity: {
-    history: [
-      {date: 'Sat Apr 18 2015 15:38:24 GMT+0200 (CEST)', value: 56},
-      {date: 'Sat Apr 18 2015 15:40:24 GMT+0200 (CEST)', value: 56}
-    ]
-  },
-};
-
 var BarChart = requireNativeComponent('BarChart', null);
 
 var MyPlantAndMe = React.createClass({
   getInitialState: function() {
     return {
-      selectedTab: 'Lights'
+      selectedTab: 'luminosity',
+      loaded: false,
+      graphData: [],
     };
   },
 
-  renderTab: function(title, content, icon) {
-    debugger;
+  fetchData: function(url) {
+    this.setState({loaded: false});
+    fetch(url || config.urls[this.state.selectedTab])
+      .then((response) => response.json())
+      .then((responseData) => {
+        var obj = {};
+        obj.graphData = responseData.history;
+        obj.loaded = true;
+        this.setState(obj);
+      });
+  },
+
+  renderTab: function(title, fnCreateContent, icon) {
+    var content = !this.state.loaded ?
+          React.createElement(Text, styles.container, "Loading data") :
+          fnCreateContent();
+
     return React.createElement(TabBarIOS.Item, {
       title: title,
       icon: icon,
       style: styles.container,
       selected: this.state.selectedTab == title,
-      onPress: () => {this.setState({selectedTab: title})},
+      onPress: () => {
+        this.setState({selectedTab: title});
+        this.fetchData(config.urls[title]);
+      },
     }, content);
   },
 
   renderContentLights: function() {
     var chart = [
-      {data: [1, 2, 3, 3, 2, 5, 7, 5, 4, 3],
-       color: {r: 77, g: 196, b: 122, a: 1}}
+      {
+        data: this.state.graphData.map((d) => d.value),
+        color: {r: 77, g: 196, b: 122, a: 1}
+      },
     ];
 
     var labels = {
@@ -96,17 +82,23 @@ var MyPlantAndMe = React.createClass({
     return (<Text>Temperature data</Text>);
   },
 
+  componentDidMount: function() {
+    this.fetchData();
+  },
+
   render: function() {
     return (
         <TabBarIOS>
-        {this.renderTab('Lights',
-                        this.renderContentLights(),
-                        require('image!sunny'))}
-        {this.renderTab('Water', this.renderContentWater(),
-                        require('image!water-drop'))}
-        {this.renderTab('Temperature', this.renderContentTemperature(),
-                        require('image!thermometer'))}
-        </TabBarIOS>
+            {this.renderTab('luminosity',
+                            this.renderContentLights,
+                            require('image!sunny'))}
+            {this.renderTab('humidity',
+                            this.renderContentWater,
+                            require('image!water-drop'))}
+            {this.renderTab('temp',
+                            this.renderContentTemperature,
+                            require('image!thermometer'))}
+      </TabBarIOS>
     );
   }
 });
